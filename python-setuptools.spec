@@ -35,8 +35,9 @@ rm -rf $RPM_BUILD_ROOT
 python ./setup.py install \
 	--optimize 2 \
 	--root=$RPM_BUILD_ROOT
-
 %py_postclean
+
+echo '%{module}-%{version}-py%{py_ver}.egg' > $RPM_BUILD_ROOT%{py_sitescriptdir}/%{module}.pth
 
 %clean
 rm -rf $RPM_BUILD_ROOT
