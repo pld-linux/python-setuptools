@@ -10,6 +10,7 @@ Group:		Development/Languages/Python
 Source0:	http://cheeseshop.python.org/packages/source/s/setuptools/setuptools-%{version}.zip
 # Source0-md5:	3eecdf66c1a2cf8a6556bc00b69d572a
 URL:		http://peak.telecommunity.com/DevCenter/setuptools
+BuildRequires:	findutils
 %pyrequires_eq	python
 BuildRequires:	python-devel
 BuildRequires:	unzip
@@ -35,6 +36,13 @@ rm -rf $RPM_BUILD_ROOT
 python ./setup.py install \
 	--optimize 2 \
 	--root=$RPM_BUILD_ROOT
+
+find $RPM_BUILD_ROOT -type f -name '*.pyc' -exec rm "{}" ";"
+find $RPM_BUILD_ROOT -type f -name '*.pyo' -exec rm "{}" ";"
+find $RPM_BUILD_ROOT -type f -exec sed -i -e "s#$RPM_BUILD_ROOT##g" "{}" ";"
+
+%py_ocomp $RPM_BUILD_ROOT%{py_sitescriptdir}
+%py_comp $RPM_BUILD_ROOT%{py_sitescriptdir}
 %py_postclean
 
 echo '%{module}-%{version}-py%{py_ver}.egg' > $RPM_BUILD_ROOT%{py_sitescriptdir}/%{module}.pth
