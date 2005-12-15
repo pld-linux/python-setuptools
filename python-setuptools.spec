@@ -2,6 +2,7 @@
 %define	module	setuptools
 
 Summary:	A collection of enhancements to the Python distutils
+Summary(pl):	Zestaw rozszerzeñ dla pythonowych distutils
 Name:		python-setuptools
 Version:	0.6a8
 Release:	1
@@ -23,6 +24,13 @@ setuptools is a collection of enhancements to the Python distutils
 minimum of Python 2.4) that allow you to more easily build and
 distribute Python packages, especially ones that have dependencies on
 other packages.
+
+%description -l pl
+setuptools to zestaw rozszerzeñ do pythonowych distutils (dla Pythona
+2.3.5 i nowszego na wiêkszo¶ci platform; platformy 64-bitowe wymagaj±
+co najmniej Pythona 2.4) umo¿liwiaj±cy ³atwiejsze budowanie i
+rozprowadzanie pakietów Pythona, szczególnie tych maj±cych zale¿no¶ci
+od innych pakietów.
 
 %prep
 %setup  -q -n %{module}-%{version}
