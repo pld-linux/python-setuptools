@@ -1,15 +1,17 @@
 
 %define	module	setuptools
+%define	snap	20051219
 
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl):	Zestaw rozszerzeñ dla pythonowych distutils
 Name:		python-setuptools
-Version:	0.6a8
-Release:	1
+Version:	0.6a9
+Release:	0.%{snap}.1
 License:	GPL
 Group:		Development/Languages/Python
-Source0:	http://cheeseshop.python.org/packages/source/s/setuptools/setuptools-%{version}.zip
-# Source0-md5:	3eecdf66c1a2cf8a6556bc00b69d572a
+# Source0:	http://cheeseshop.python.org/packages/source/s/setuptools/setuptools-%{version}.zip
+Source0:	setuptools-%{snap}.tar.gz
+# Source0-md5:	594f178498539c14f646bb00fb382a98
 URL:		http://peak.telecommunity.com/DevCenter/setuptools
 BuildRequires:	findutils
 %pyrequires_eq	python
@@ -33,7 +35,7 @@ rozprowadzanie pakietów Pythona, szczególnie tych maj±cych zale¿no¶ci
 od innych pakietów.
 
 %prep
-%setup  -q -n %{module}-%{version}
+%setup  -q -n %{module}
 
 %build
 python ./setup.py build
@@ -42,18 +44,15 @@ python ./setup.py build
 rm -rf $RPM_BUILD_ROOT
 
 python ./setup.py install \
+	--single-version-externally-managed \
 	--optimize 2 \
 	--root=$RPM_BUILD_ROOT
 
-find $RPM_BUILD_ROOT -type f -name '*.pyc' -exec rm "{}" ";"
-find $RPM_BUILD_ROOT -type f -name '*.pyo' -exec rm "{}" ";"
-find $RPM_BUILD_ROOT -type f -exec sed -i -e "s#$RPM_BUILD_ROOT##g" "{}" ";"
+rm -f $RPM_BUILD_ROOT%{py_sitescriptdir}/*/*.exe
 
 %py_ocomp $RPM_BUILD_ROOT%{py_sitescriptdir}
 %py_comp $RPM_BUILD_ROOT%{py_sitescriptdir}
 %py_postclean
-
-echo '%{module}-%{version}-py%{py_ver}.egg' > $RPM_BUILD_ROOT%{py_sitescriptdir}/%{module}.pth
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -63,3 +62,4 @@ rm -rf $RPM_BUILD_ROOT
 %doc *.txt
 %attr(755,root,root) %{_bindir}/*
 %{py_sitescriptdir}/%{module}*
+%{py_sitescriptdir}/*.py[co]
