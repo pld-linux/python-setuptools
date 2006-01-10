@@ -1,17 +1,15 @@
 
 %define	module	setuptools
-%define	snap	20051220
 
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl):	Zestaw rozszerzeñ dla pythonowych distutils
 Name:		python-setuptools
 Version:	0.6a9
-Release:	0.%{snap}.1
+Release:	1
 License:	GPL
 Group:		Development/Languages/Python
-# Source0:	http://cheeseshop.python.org/packages/source/s/setuptools/setuptools-%{version}.zip
-Source0:	setuptools-%{snap}.tar.gz
-# Source0-md5:	fe4a6220fd75be168babbc210ac1f3f6
+Source0:	http://cheeseshop.python.org/packages/source/s/setuptools/setuptools-%{version}.zip
+# Source0-md5:	10bd22507d6115df6ba053228b648a0c
 URL:		http://peak.telecommunity.com/DevCenter/setuptools
 BuildRequires:	findutils
 %pyrequires_eq	python
@@ -35,7 +33,7 @@ rozprowadzanie pakietów Pythona, szczególnie tych maj±cych zale¿no¶ci
 od innych pakietów.
 
 %prep
-%setup  -q -n %{module}
+%setup  -q -n %{module}-%{version}
 
 %build
 python ./setup.py build
