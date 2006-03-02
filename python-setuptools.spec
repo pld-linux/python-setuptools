@@ -4,12 +4,12 @@
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl):	Zestaw rozszerzeñ dla pythonowych distutils
 Name:		python-setuptools
-Version:	0.6a9
+Version:	0.6a10
 Release:	1
 License:	GPL
 Group:		Development/Languages/Python
 Source0:	http://cheeseshop.python.org/packages/source/s/setuptools/setuptools-%{version}.zip
-# Source0-md5:	10bd22507d6115df6ba053228b648a0c
+# Source0-md5:	8bcf7524d484aa3134a1b5aa64d2c275
 URL:		http://peak.telecommunity.com/DevCenter/setuptools
 BuildRequires:	findutils
 %pyrequires_eq	python
