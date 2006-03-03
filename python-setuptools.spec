@@ -51,6 +51,7 @@ rm -f $RPM_BUILD_ROOT%{py_sitescriptdir}/*/*.exe
 %py_ocomp $RPM_BUILD_ROOT%{py_sitescriptdir}
 %py_comp $RPM_BUILD_ROOT%{py_sitescriptdir}
 %py_postclean
+install site.py $RPM_BUILD_ROOT%{py_sitescriptdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -61,3 +62,4 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/*
 %{py_sitescriptdir}/%{module}*
 %{py_sitescriptdir}/*.py[co]
+%{py_sitescriptdir}/site.py
