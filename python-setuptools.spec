@@ -1,16 +1,17 @@
 
 %define	module	setuptools
+%define sub	a11
 
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl):	Zestaw rozszerzeñ dla pythonowych distutils
 Name:		python-setuptools
 Version:	0.6
-Release:	0.a10.1
+Release:	0.%{sub}.1
 Epoch:		1
 License:	GPL
 Group:		Development/Languages/Python
-Source0:	http://cheeseshop.python.org/packages/source/s/setuptools/setuptools-%{version}a10.zip
-# Source0-md5:	8bcf7524d484aa3134a1b5aa64d2c275
+Source0:	 http://cheeseshop.python.org/packages/source/s/setuptools/setuptools-%{version}%{sub}.zip
+# Source0-md5:	e34ba85973095f378045f3002a829b12
 URL:		http://peak.telecommunity.com/DevCenter/setuptools
 BuildRequires:	findutils
 %pyrequires_eq	python
@@ -34,7 +35,7 @@ rozprowadzanie pakietów Pythona, szczególnie tych maj±cych zale¿no¶ci
 od innych pakietów.
 
 %prep
-%setup  -q -n %{module}-%{version}
+%setup  -q -n %{module}-%{version}%{sub}
 
 %build
 python ./setup.py build
