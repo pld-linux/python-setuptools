@@ -1,6 +1,6 @@
 
 %define	module	setuptools
-%define sub	c1
+%define sub	c2
 
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl):	Zestaw rozszerzeñ dla pythonowych distutils
@@ -11,7 +11,7 @@ Epoch:		1
 License:	GPL
 Group:		Development/Languages/Python
 Source0:	 http://cheeseshop.python.org/packages/source/s/setuptools/setuptools-%{version}%{sub}.zip
-# Source0-md5:	9e5e38dcce7902b892110625d18108c6
+# Source0-md5:	b0729008542f44d07c510d880ba582aa
 URL:		http://peak.telecommunity.com/DevCenter/setuptools
 BuildRequires:	findutils
 %pyrequires_eq	python
