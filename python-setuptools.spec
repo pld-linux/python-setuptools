@@ -6,7 +6,7 @@ Summary:	A collection of enhancements to the Python distutils
 Summary(pl):	Zestaw rozszerzeñ dla pythonowych distutils
 Name:		python-setuptools
 Version:	0.6
-Release:	0.%{sub}.1
+Release:	0.%{sub}.2
 Epoch:		1
 License:	GPL
 Group:		Development/Languages/Python
