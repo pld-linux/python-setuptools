@@ -16,7 +16,7 @@ URL:		http://peak.telecommunity.com/DevCenter/setuptools
 BuildRequires:	findutils
 %pyrequires_eq	python
 BuildRequires:	python-devel
-Requires:   python-devel
+Requires:	python-devel
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -35,7 +35,7 @@ rozprowadzanie pakietów Pythona, szczególnie tych maj±cych zale¿no¶ci
 od innych pakietów.
 
 %prep
-%setup  -q -n %{module}-%{version}%{sub}
+%setup -q -n %{module}-%{version}%{sub}
 
 %build
 python ./setup.py build
