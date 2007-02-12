@@ -3,7 +3,7 @@
 %define sub	c3
 
 Summary:	A collection of enhancements to the Python distutils
-Summary(pl):	Zestaw rozszerzeñ dla pythonowych distutils
+Summary(pl.UTF-8):   Zestaw rozszerzeÅ„ dla pythonowych distutils
 Name:		python-setuptools
 Version:	0.6
 Release:	0.%{sub}.2
@@ -27,12 +27,12 @@ minimum of Python 2.4) that allow you to more easily build and
 distribute Python packages, especially ones that have dependencies on
 other packages.
 
-%description -l pl
-setuptools to zestaw rozszerzeñ do pythonowych distutils (dla Pythona
-2.3.5 i nowszego na wiêkszo¶ci platform; platformy 64-bitowe wymagaj±
-co najmniej Pythona 2.4) umo¿liwiaj±cy ³atwiejsze budowanie i
-rozprowadzanie pakietów Pythona, szczególnie tych maj±cych zale¿no¶ci
-od innych pakietów.
+%description -l pl.UTF-8
+setuptools to zestaw rozszerzeÅ„ do pythonowych distutils (dla Pythona
+2.3.5 i nowszego na wiÄ™kszoÅ›ci platform; platformy 64-bitowe wymagajÄ…
+co najmniej Pythona 2.4) umoÅ¼liwiajÄ…cy Å‚atwiejsze budowanie i
+rozprowadzanie pakietÃ³w Pythona, szczegÃ³lnie tych majÄ…cych zaleÅ¼noÅ›ci
+od innych pakietÃ³w.
 
 %prep
 %setup -q -n %{module}-%{version}%{sub}
