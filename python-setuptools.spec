@@ -3,7 +3,7 @@
 %define sub	c3
 
 Summary:	A collection of enhancements to the Python distutils
-Summary(pl.UTF-8):   Zestaw rozszerzeń dla pythonowych distutils
+Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
 Version:	0.6
 Release:	0.%{sub}.2
