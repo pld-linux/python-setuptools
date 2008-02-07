@@ -10,10 +10,9 @@ Epoch:		1
 License:	GPL
 Group:		Development/Languages/Python
 #Source0:	http://cheeseshop.python.org/packages/source/s/setuptools/setuptools-%{version}%{sub}.tar.gz
-Source0:	setuptools-0.6r60636.tar.bz2
-# Source0-md5:	dedbf6a4f71cd6deaf13ee885054f16b
+Source0:	setuptools-%{version}%{subver}.tar.bz2
+# Source0-md5:	6d431478bb7cf40d331184538cc795f0
 URL:		http://peak.telecommunity.com/DevCenter/setuptools
-BuildRequires:	findutils
 %pyrequires_eq	python
 BuildRequires:	python-devel
 Requires:	python-devel
