@@ -2,7 +2,7 @@
 # - sync -pl
 %define		module	setuptools
 %define		subver 	c8
-%define		rel		2
+%define		rel		3
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
@@ -36,7 +36,7 @@ od innych pakietów.
 %package devel
 Summary:	Download, install, upgrade, and uninstall Python packages
 Group:		Development/Languages
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	python-devel
 
 %description devel
