@@ -1,8 +1,6 @@
-# TODO:
-# - sync -pl
 %define		module	setuptools
 %define		subver 	c8
-%define		rel		3
+%define		rel	3
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
@@ -27,14 +25,16 @@ This package contains the runtime components of setuptools, necessary
 to execute the software that requires pkg_resources.py.
 
 %description -l pl.UTF-8
-setuptools to zestaw rozszerzeń do pythonowych distutils (dla Pythona
-2.3.5 i nowszego na większości platform; platformy 64-bitowe wymagają
-co najmniej Pythona 2.4) umożliwiający łatwiejsze budowanie i
-rozprowadzanie pakietów Pythona, szczególnie tych mających zależności
-od innych pakietów.
+setuptools to zestaw rozszerzeń do pythonowych distutils umożliwiający
+łatwiejsze budowanie i rozprowadzanie pakietów Pythona, szczególnie
+tych mających zależności od innych pakietów.
+
+Ten pakiet zawiera składniki uruchomieniowe setuptools, potrzebne do
+uruchamiania kodu wymagającego pkg_resources.py.
 
 %package devel
 Summary:	Download, install, upgrade, and uninstall Python packages
+Summary(pl.UTF-8):	Ściąganie, instalacja, uaktualnianie i usuwanie pakietów Pythona
 Group:		Development/Languages
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	python-devel
@@ -47,6 +47,14 @@ especially ones that have dependencies on other packages.
 This package contains the components necessary to build and install
 software requiring setuptools.
 
+%description devel -l pl.UTF-8
+setuptools to zestaw rozszerzeń do pythonowych distutils umożliwiający
+łatwiejsze budowanie i rozprowadzanie pakietów Pythona, szczególnie
+tych mających zależności od innych pakietów.
+
+Ten pakiet zawiera składniki potrzebne do budowania i instalacji
+oprogramowania wymagającego setuptools.
+
 %prep
 %setup -q -n %{module}-%{version}%{subver}
 
@@ -56,7 +64,7 @@ software requiring setuptools.
 %install
 rm -rf $RPM_BUILD_ROOT
 
-python ./setup.py install \
+%{__python} ./setup.py install \
 	--single-version-externally-managed \
 	--optimize 2 \
 	--root=$RPM_BUILD_ROOT
