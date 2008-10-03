@@ -1,6 +1,6 @@
 %define		module	setuptools
 %define		subver 	c8
-%define		rel	3
+%define		rel	4
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
