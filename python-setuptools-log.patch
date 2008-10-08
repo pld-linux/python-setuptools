@@ -1,9 +1,0 @@
---- setuptools-0.6c8/setuptools/command/sdist.py.orig	2008-09-13 14:58:37.000000000 +0100
-+++ setuptools-0.6c8/setuptools/command/sdist.py	2008-09-13 14:58:46.000000000 +0100
-@@ -1,5 +1,6 @@
- from distutils.command.sdist import sdist as _sdist
- from distutils.util import convert_path
-+from distutils import log
- import os, re, sys, pkg_resources
- 
- entities = [
