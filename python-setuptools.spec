@@ -1,6 +1,6 @@
 %define		module	setuptools
-%define		subver 	c8
-%define		rel	4
+%define		subver 	c9
+%define		rel	1
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
@@ -10,8 +10,7 @@ Epoch:		1
 License:	GPL
 Group:		Development/Languages/Python
 Source0:	http://cheeseshop.python.org/packages/source/s/setuptools/setuptools-%{version}%{subver}.tar.gz
-# Source0-md5:	0e9bbe1466f3ee29588cc09d3211a010
-Patch0:		%{name}-log.patch
+# Source0-md5:	3864c01d9c719c8924c455714492295e
 URL:		http://peak.telecommunity.com/DevCenter/setuptools
 BuildRequires:	python-devel
 BuildArch:	noarch
@@ -58,7 +57,6 @@ oprogramowania wymagającego setuptools.
 
 %prep
 %setup -q -n %{module}-%{version}%{subver}
-%patch0 -p1
 
 %build
 %{__python} ./setup.py build
