@@ -13,6 +13,8 @@ Source0:	http://cheeseshop.python.org/packages/source/s/setuptools/setuptools-%{
 # Source0-md5:	7df2a529a074f613b509fb44feefe74e
 URL:		http://peak.telecommunity.com/DevCenter/setuptools
 BuildRequires:	python-devel
+BuildRequires:	python-modules
+BuildRequires:	rpm-pythonprov
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
