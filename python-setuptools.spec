@@ -1,7 +1,7 @@
 #
 # Conditional build:
-%bcond_with	doc		# don't build doc
-%bcond_with	tests	# do not perform "make test"
+%bcond_without	apidocs	# sphinx based documentation
+%bcond_with	tests	# "test" action (fails?)
 %bcond_without	python2 # CPython 2.x module
 %bcond_without	python3 # CPython 3.x module
 
@@ -17,41 +17,52 @@ Group:		Development/Languages/Python
 Source0:	http://cheeseshop.python.org/packages/source/s/setuptools/setuptools-%{version}.tar.gz
 # Source0-md5:	b79fab610e362fe8e3a9cb92fb9d95ef
 URL:		https://bitbucket.org/pypa/setuptools
+%if %(locale -a | grep -q '^en_US.UTF-8$'; echo $?)
+BuildRequires:	glibc-localedb-all
+%endif
 %if %{with python2}
 BuildRequires:	python-distribute
+BuildRequires:	python-modules >= 1:2.6
 %endif
 %if %{with python3}
 BuildRequires:	python3-distribute
-BuildRequires:	python3-modules
+BuildRequires:	python3-modules >= 1:3.2
 %endif
+BuildRequires:	rpm-pythonprov
+Requires:	python-modules >= 1:2.6
+Obsoletes:	python-setuptools-devel
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 setuptools is a collection of enhancements to the Python distutils
-that allow you to more easily build and distribute Python packages,
-especially ones that have dependencies on other packages.
-
-This package contains the runtime components of setuptools, necessary
-to execute the software that requires pkg_resources.py.
+that allow you to more easily build and distribute Python 2.x
+packages, especially ones that have dependencies on other packages.
 
 %description -l pl.UTF-8
 setuptools to zestaw rozszerzeń do pythonowych distutils umożliwiający
-łatwiejsze budowanie i rozprowadzanie pakietów Pythona, szczególnie
-tych mających zależności od innych pakietów.
+łatwiejsze budowanie i rozprowadzanie pakietów Pythona 2.x,
+szczególnie tych mających zależności od innych pakietów.
 
 Ten pakiet zawiera składniki uruchomieniowe setuptools, potrzebne do
-uruchamiania kodu wymagającego pkg_resources.py.
+uruchamiania kodu wymagającego pkg_resources.py, przeznaczone dla
+Pythona 2.x.
 
 %package -n python3-%{module}
-Summary:	-
-Summary(pl.UTF-8):	-
+Summary:	A collection of enhancements to the Python distutils
+Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Group:		Libraries/Python
-Requires:	python3-modules
+Requires:	python3-modules >= 1:3.2
 
 %description -n python3-%{module}
+setuptools is a collection of enhancements to the Python distutils
+that allow you to more easily build and distribute Python 3.x
+packages, especially ones that have dependencies on other packages.
 
 %description -n python3-%{module} -l pl.UTF-8
+setuptools to zestaw rozszerzeń do pythonowych distutils umożliwiający
+łatwiejsze budowanie i rozprowadzanie pakietów Pythona 3.x,
+szczególnie tych mających zależności od innych pakietów.
 
 %package apidocs
 Summary:	%{module} API documentation
@@ -64,51 +75,26 @@ API documentation for %{module}.
 %description apidocs -l pl.UTF-8
 Dokumentacja API %{module}.
 
-%package devel
-Summary:	Download, install, upgrade, and uninstall Python packages
-Summary(pl.UTF-8):	Ściąganie, instalacja, uaktualnianie i usuwanie pakietów Pythona
-Group:		Development/Languages
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-Requires:	python-devel
-
-%description devel
-setuptools is a collection of enhancements to the Python distutils
-that allow you to more easily build and distribute Python packages,
-especially ones that have dependencies on other packages.
-
-This package contains the components necessary to build and install
-software requiring setuptools.
-
-%description devel -l pl.UTF-8
-setuptools to zestaw rozszerzeń do pythonowych distutils umożliwiający
-łatwiejsze budowanie i rozprowadzanie pakietów Pythona, szczególnie
-tych mających zależności od innych pakietów.
-
-Ten pakiet zawiera składniki potrzebne do budowania i instalacji
-oprogramowania wymagającego setuptools.
-
 %prep
 %setup -q -n %{module}-%{version}
 
 %build
 %if %{with python2}
+LC_ALL=en_US.UTF-8 \
 %{__python} setup.py build --build-base build-2 %{?with_tests:test}
 %endif
 
 %if %{with python3}
+LC_ALL=en_US.UTF-8 \
 %{__python3} setup.py build --build-base build-3 %{?with_tests:test}
+%endif
+
+%if %{with apidocs}
+%{__make} -C docs html
 %endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
-%if %{with python2}
-%{__python} setup.py \
-	build --build-base build-2 \
-	install --skip-build \
-	--optimize=2 \
-	--root=$RPM_BUILD_ROOT
-%endif
 
 %if %{with python3}
 %{__python3} setup.py \
@@ -116,6 +102,16 @@ rm -rf $RPM_BUILD_ROOT
 	install --skip-build \
 	--optimize=2 \
 	--root=$RPM_BUILD_ROOT
+%endif
+
+%if %{with python2}
+%{__python} setup.py \
+	build --build-base build-2 \
+	install --skip-build \
+	--optimize=2 \
+	--root=$RPM_BUILD_ROOT
+
+%py_postclean
 %endif
 
 %clean
@@ -131,10 +127,7 @@ rm -rf $RPM_BUILD_ROOT
 %{py_sitescriptdir}/_markerlib
 %{py_sitescriptdir}/easy_install.py[co]
 %{py_sitescriptdir}/pkg_resources.py[co]
-
-%if "%{py_ver}" > "2.4"
 %{py_sitescriptdir}/%{module}-%{version}-py*.egg-info
-%endif
 %endif
 
 %if %{with python3}
@@ -142,7 +135,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc CHANGES.txt README.txt DEVGUIDE.txt 
 %attr(755,root,root) %{_bindir}/easy_install-3.*
-%{py3_sitescriptdir}/__pycache__/*
+%{py3_sitescriptdir}/__pycache__/easy_install.*.py[co]
+%{py3_sitescriptdir}/__pycache__/pkg_resources.*.py[co]
 %{py3_sitescriptdir}/%{module}
 %{py3_sitescriptdir}/_markerlib
 %{py3_sitescriptdir}/easy_install.py
@@ -150,10 +144,8 @@ rm -rf $RPM_BUILD_ROOT
 %{py3_sitescriptdir}/%{module}-%{version}-py*.egg-info
 %endif
 
-%if %{with doc}
+%if %{with apidocs}
 %files apidocs
 %defattr(644,root,root,755)
-# %doc docs/_build/html/*
+%doc docs/build/html/*
 %endif
-
-
