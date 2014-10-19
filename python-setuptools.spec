@@ -9,13 +9,13 @@
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
-Version:	6.0.2
+Version:	6.1
 Release:	1
 Epoch:		1
 License:	PSF or ZPL
 Group:		Development/Languages/Python
-Source0:	http://cheeseshop.python.org/packages/source/s/setuptools/setuptools-%{version}.tar.gz
-# Source0-md5:	b79fab610e362fe8e3a9cb92fb9d95ef
+Source0:	https://pypi.python.org/packages/source/s/setuptools/setuptools-%{version}.tar.gz
+# Source0-md5:	e9b44838c2e6c66f232327d7821ff6f8
 URL:		https://bitbucket.org/pypa/setuptools
 %if %(locale -a | grep -q '^en_US.UTF-8$'; echo $?)
 BuildRequires:	glibc-localedb-all
