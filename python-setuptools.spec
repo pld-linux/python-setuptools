@@ -10,7 +10,7 @@ Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
 Version:	7.0
-Release:	1
+Release:	2
 Epoch:		1
 License:	PSF or ZPL
 Group:		Development/Languages/Python
@@ -30,6 +30,7 @@ BuildRequires:	python3-modules >= 1:3.2
 %endif
 BuildRequires:	rpm-pythonprov
 Requires:	python-modules >= 1:2.6
+Obsoletes:	python-distribute
 Obsoletes:	python-setuptools-devel
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -120,7 +121,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python2}
 %files
 %defattr(644,root,root,755)
-%doc CHANGES.txt README.txt DEVGUIDE.txt 
+%doc CHANGES.txt README.txt DEVGUIDE.txt
 %attr(755,root,root) %{_bindir}/easy_install
 %attr(755,root,root) %{_bindir}/easy_install-2.*
 %{py_sitescriptdir}/%{module}
@@ -133,7 +134,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python3}
 %files -n python3-%{module}
 %defattr(644,root,root,755)
-%doc CHANGES.txt README.txt DEVGUIDE.txt 
+%doc CHANGES.txt README.txt DEVGUIDE.txt
 %attr(755,root,root) %{_bindir}/easy_install-3.*
 %{py3_sitescriptdir}/__pycache__/easy_install.*.py[co]
 %{py3_sitescriptdir}/__pycache__/pkg_resources.*.py[co]
