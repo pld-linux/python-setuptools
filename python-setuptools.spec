@@ -9,13 +9,14 @@
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
-Version:	7.0
-Release:	2
+Version:	14.0
+Release:	1
 Epoch:		1
 License:	PSF or ZPL
 Group:		Development/Languages/Python
+#Source0Download: https://pypi.python.org/pypi/setuptools
 Source0:	https://pypi.python.org/packages/source/s/setuptools/setuptools-%{version}.tar.gz
-# Source0-md5:	6245d6752e2ef803c365f560f7f2f940
+# Source0-md5:	058655fe511deccb4359bf02727f5199
 URL:		https://bitbucket.org/pypa/setuptools
 %if %(locale -a | grep -q '^en_US.UTF-8$'; echo $?)
 BuildRequires:	glibc-localedb-all
@@ -27,6 +28,10 @@ BuildRequires:	python-modules >= 1:2.6
 %if %{with python3}
 BuildRequires:	python3-distribute
 BuildRequires:	python3-modules >= 1:3.2
+%endif
+%if %{with apidocs}
+BuildRequires:	python-rst.linker
+BuildRequires:	sphinx-pdg
 %endif
 BuildRequires:	rpm-pythonprov
 Requires:	python-modules >= 1:2.6
@@ -91,7 +96,9 @@ LC_ALL=en_US.UTF-8 \
 %endif
 
 %if %{with apidocs}
-%{__make} -C docs html
+#%{__make} -C docs html
+# rst.linker needs sphinx-build to be run from directory containing "CHANGES.txt"
+sphinx-build -b html -d build/doctrees -D latex_paper_size=a4 docs build/html
 %endif
 
 %install
@@ -124,10 +131,10 @@ rm -rf $RPM_BUILD_ROOT
 %doc CHANGES.txt README.txt DEVGUIDE.txt
 %attr(755,root,root) %{_bindir}/easy_install
 %attr(755,root,root) %{_bindir}/easy_install-2.*
-%{py_sitescriptdir}/%{module}
+%{py_sitescriptdir}/pkg_resources
+%{py_sitescriptdir}/setuptools
 %{py_sitescriptdir}/_markerlib
 %{py_sitescriptdir}/easy_install.py[co]
-%{py_sitescriptdir}/pkg_resources.py[co]
 %{py_sitescriptdir}/%{module}-%{version}-py*.egg-info
 %endif
 
@@ -137,16 +144,15 @@ rm -rf $RPM_BUILD_ROOT
 %doc CHANGES.txt README.txt DEVGUIDE.txt
 %attr(755,root,root) %{_bindir}/easy_install-3.*
 %{py3_sitescriptdir}/__pycache__/easy_install.*.py[co]
-%{py3_sitescriptdir}/__pycache__/pkg_resources.*.py[co]
-%{py3_sitescriptdir}/%{module}
+%{py3_sitescriptdir}/pkg_resources
+%{py3_sitescriptdir}/setuptools
 %{py3_sitescriptdir}/_markerlib
 %{py3_sitescriptdir}/easy_install.py
-%{py3_sitescriptdir}/pkg_resources.py
 %{py3_sitescriptdir}/%{module}-%{version}-py*.egg-info
 %endif
 
 %if %{with apidocs}
 %files apidocs
 %defattr(644,root,root,755)
-%doc docs/build/html/*
+%doc build/html/*
 %endif
