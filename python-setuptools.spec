@@ -70,6 +70,7 @@ Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Group:		Libraries/Python
 Requires:	python3-modules >= 1:3.2
+Obsoletes:	python3-distribute < 0.7
 
 %description -n python3-%{module}
 setuptools is a collection of enhancements to the Python distutils
