@@ -24,19 +24,19 @@ BuildRequires:	glibc-localedb-all
 %endif
 %if %{with python2}
 %if %{with bootstrap}
-BuildRequires:        python-distribute < 0.7
+BuildRequires:	python-distribute < 0.7
 %else
-BuildRequires:     python-setuptools > 7.0
-BuildConflicts:    python-distribute < 0.7
+BuildRequires:	python-setuptools > 7.0
+BuildConflicts:	python-distribute < 0.7
 %endif
 BuildRequires:	python-modules >= 1:2.6
 %endif
 %if %{with python3}
 %if %{with bootstrap}
-BuildRequires:     python3-distribute < 0.7
+BuildRequires:	python3-distribute < 0.7
 %else
-BuildRequires:     python3-setuptools > 7.0
-BuildConflicts:    python3-distribute < 0.7
+BuildRequires:	python3-setuptools > 7.0
+BuildConflicts:	python3-distribute < 0.7
 %endif
 BuildRequires:	python3-modules >= 1:3.2
 %endif
