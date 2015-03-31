@@ -4,29 +4,40 @@
 %bcond_with	tests	# "test" action (fails?)
 %bcond_without	python2 # CPython 2.x module
 %bcond_without	python3 # CPython 3.x module
+%bcond_with 	bootstrap # build using old distribute
 
 %define		module	setuptools
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
-Version:	14.0
+Version:	14.3.1
 Release:	1
 Epoch:		1
 License:	PSF or ZPL
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.python.org/pypi/setuptools
 Source0:	https://pypi.python.org/packages/source/s/setuptools/setuptools-%{version}.tar.gz
-# Source0-md5:	058655fe511deccb4359bf02727f5199
+# Source0-md5:	cdba2741b16acaa3ed06c2252623f6b9
 URL:		https://bitbucket.org/pypa/setuptools
 %if %(locale -a | grep -q '^en_US.UTF-8$'; echo $?)
 BuildRequires:	glibc-localedb-all
 %endif
 %if %{with python2}
-BuildRequires:	python-distribute
+%if %{with bootstrap}
+BuildRequires:        python-distribute < 0.7
+%else
+BuildRequires:     python-setuptools > 7.0
+BuildConflicts:    python-distribute < 0.7
+%endif
 BuildRequires:	python-modules >= 1:2.6
 %endif
 %if %{with python3}
-BuildRequires:	python3-distribute
+%if %{with bootstrap}
+BuildRequires:     python3-distribute < 0.7
+%else
+BuildRequires:     python3-setuptools > 7.0
+BuildConflicts:    python3-distribute < 0.7
+%endif
 BuildRequires:	python3-modules >= 1:3.2
 %endif
 %if %{with apidocs}
@@ -35,7 +46,7 @@ BuildRequires:	sphinx-pdg
 %endif
 BuildRequires:	rpm-pythonprov
 Requires:	python-modules >= 1:2.6
-Obsoletes:	python-distribute
+Obsoletes:	python-distribute < 0.7
 Obsoletes:	python-setuptools-devel
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
