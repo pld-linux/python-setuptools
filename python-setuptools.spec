@@ -10,14 +10,14 @@
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
-Version:	14.3.1
-Release:	2
+Version:	18.3
+Release:	1
 Epoch:		1
 License:	PSF or ZPL
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.python.org/pypi/setuptools
 Source0:	https://pypi.python.org/packages/source/s/setuptools/setuptools-%{version}.tar.gz
-# Source0-md5:	cdba2741b16acaa3ed06c2252623f6b9
+# Source0-md5:	9ff0ec700f7e10f2eb72f34df387f53a
 URL:		https://bitbucket.org/pypa/setuptools
 %if %(locale -a | grep -q '^en_US.UTF-8$'; echo $?)
 BuildRequires:	glibc-localedb-all
@@ -96,6 +96,9 @@ Dokumentacja API %{module}.
 %prep
 %setup -q -n %{module}-%{version}
 
+# missing file, required by docs build (as of 18.3)
+touch CHANGES.txt
+
 %build
 %if %{with python2}
 LC_ALL=en_US.UTF-8 \
@@ -140,7 +143,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python2}
 %files
 %defattr(644,root,root,755)
-%doc CHANGES.txt README.txt DEVGUIDE.txt
+%doc README.txt
 %attr(755,root,root) %{_bindir}/easy_install
 %attr(755,root,root) %{_bindir}/easy_install-2.*
 %{py_sitescriptdir}/pkg_resources
@@ -153,7 +156,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python3}
 %files -n python3-%{module}
 %defattr(644,root,root,755)
-%doc CHANGES.txt README.txt DEVGUIDE.txt
+%doc README.txt
 %attr(755,root,root) %{_bindir}/easy_install-3.*
 %{py3_sitescriptdir}/__pycache__/easy_install.*.py[co]
 %{py3_sitescriptdir}/pkg_resources
