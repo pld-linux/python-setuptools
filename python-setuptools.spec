@@ -11,7 +11,7 @@ Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
 Version:	18.3
-Release:	3
+Release:	4
 Epoch:		1
 License:	PSF or ZPL
 Group:		Development/Languages/Python
