@@ -11,7 +11,7 @@ Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
 Version:	18.3
-Release:	2
+Release:	3
 Epoch:		1
 License:	PSF or ZPL
 Group:		Development/Languages/Python
@@ -26,7 +26,7 @@ BuildRequires:	glibc-localedb-all
 %if %{with bootstrap}
 BuildRequires:	python-distribute < 0.7
 %else
-BuildRequires:	python-setuptools > 7.0
+#BuildRequires:	python-setuptools > 7.0
 BuildConflicts:	python-distribute < 0.7
 %endif
 BuildRequires:	python-modules >= 1:2.6
@@ -35,7 +35,7 @@ BuildRequires:	python-modules >= 1:2.6
 %if %{with bootstrap}
 BuildRequires:	python3-distribute < 0.7
 %else
-BuildRequires:	python3-setuptools > 7.0
+#BuildRequires:	python3-setuptools > 7.0
 BuildConflicts:	python3-distribute < 0.7
 %endif
 BuildRequires:	python3-modules >= 1:3.2
