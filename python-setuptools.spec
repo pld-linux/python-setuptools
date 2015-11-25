@@ -44,6 +44,7 @@ BuildRequires:	python3-modules >= 1:3.2
 BuildRequires:	python-rst.linker
 BuildRequires:	sphinx-pdg
 %endif
+BuildRequires:	rpmbuild(macros) >= 1.710
 BuildRequires:	rpm-pythonprov
 Requires:	python-modules >= 1:2.6
 Obsoletes:	python-distribute < 0.7
@@ -102,12 +103,12 @@ touch CHANGES.txt
 %build
 %if %{with python2}
 LC_ALL=en_US.UTF-8 \
-%{__python} setup.py build --build-base build-2 %{?with_tests:test}
+%py_build %{?with_tests:test}
 %endif
 
 %if %{with python3}
 LC_ALL=en_US.UTF-8 \
-%{__python3} setup.py build --build-base build-3 %{?with_tests:test}
+%py3_build %{?with_tests:test}
 %endif
 
 %if %{with apidocs}
@@ -120,19 +121,11 @@ sphinx-build -b html -d build/doctrees -D latex_paper_size=a4 docs build/html
 rm -rf $RPM_BUILD_ROOT
 
 %if %{with python3}
-%{__python3} setup.py \
-	build --build-base build-3 \
-	install --skip-build \
-	--optimize=2 \
-	--root=$RPM_BUILD_ROOT
+%py3_install
 %endif
 
 %if %{with python2}
-%{__python} setup.py \
-	build --build-base build-2 \
-	install --skip-build \
-	--optimize=2 \
-	--root=$RPM_BUILD_ROOT
+%py_install
 
 %py_postclean
 %endif
