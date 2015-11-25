@@ -4,7 +4,6 @@
 %bcond_with	tests	# "test" action (fails?)
 %bcond_without	python2 # CPython 2.x module
 %bcond_without	python3 # CPython 3.x module
-%bcond_with 	bootstrap # build using old distribute
 
 %define		module	setuptools
 Summary:	A collection of enhancements to the Python distutils
@@ -23,21 +22,11 @@ URL:		https://bitbucket.org/pypa/setuptools
 BuildRequires:	glibc-localedb-all
 %endif
 %if %{with python2}
-%if %{with bootstrap}
-BuildRequires:	python-distribute < 0.7
-%else
-#BuildRequires:	python-setuptools > 7.0
 BuildConflicts:	python-distribute < 0.7
-%endif
 BuildRequires:	python-modules >= 1:2.6
 %endif
 %if %{with python3}
-%if %{with bootstrap}
-BuildRequires:	python3-distribute < 0.7
-%else
-#BuildRequires:	python3-setuptools > 7.0
 BuildConflicts:	python3-distribute < 0.7
-%endif
 BuildRequires:	python3-modules >= 1:3.2
 %endif
 %if %{with apidocs}
