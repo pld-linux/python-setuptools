@@ -15,7 +15,7 @@ Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
 Version:	18.6.1
-Release:	2
+Release:	3
 Epoch:		1
 License:	PSF or ZPL
 Group:		Development/Languages/Python
@@ -35,8 +35,8 @@ BuildRequires:	python3-modules >= 1:3.2
 BuildConflicts:	python3-distribute < 0.7
 %endif
 %if %{with apidocs}
-BuildRequires:	python-rst.linker
-BuildRequires:	sphinx-pdg
+BuildRequires:	python3-rst.linker
+BuildRequires:	sphinx-pdg-3
 %endif
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.710
@@ -125,7 +125,7 @@ LC_ALL=en_US.UTF-8 \
 %if %{with apidocs}
 #%{__make} -C docs html
 # rst.linker needs sphinx-build to be run from directory containing "CHANGES.txt"
-sphinx-build -b html -d build/doctrees -D latex_paper_size=a4 docs build/html
+sphinx-build-3 -b html -d build/doctrees -D latex_paper_size=a4 docs build/html
 %endif
 
 %install
