@@ -27,19 +27,19 @@ URL:		https://bitbucket.org/pypa/setuptools
 BuildRequires:	glibc-localedb-all
 %endif
 %if %{with python2}
-BuildConflicts:	python-distribute < 0.7
 BuildRequires:	python-modules >= 1:2.6
+BuildConflicts:	python-distribute < 0.7
 %endif
 %if %{with python3}
-BuildConflicts:	python3-distribute < 0.7
 BuildRequires:	python3-modules >= 1:3.2
+BuildConflicts:	python3-distribute < 0.7
 %endif
 %if %{with apidocs}
 BuildRequires:	python-rst.linker
 BuildRequires:	sphinx-pdg
 %endif
-BuildRequires:	rpmbuild(macros) >= 1.710
 BuildRequires:	rpm-pythonprov
+BuildRequires:	rpmbuild(macros) >= 1.710
 Requires:	python-modules >= 1:2.6
 Obsoletes:	python-distribute < 0.7
 Obsoletes:	python-setuptools-devel
@@ -86,7 +86,7 @@ Requires:	python3-%{module} = %{epoch}:%{version}-%{release}
 %else
 Requires:	python-%{module} = %{epoch}:%{version}-%{release}
 %endif
-Conflicts:	%{name} < 1:18.6.1-2
+Conflicts:	python-setuptools < 1:18.6.1-2
 
 %description -n easy_install
 Python software installer.
@@ -142,9 +142,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %if %{with python3_default}
-ln -f $RPM_BUILD_ROOT/%{_bindir}/easy_install-%{py3_ver} $RPM_BUILD_ROOT/%{_bindir}/easy_install
+ln -sf easy_install-%{py3_ver} $RPM_BUILD_ROOT%{_bindir}/easy_install
 %else
-ln -f $RPM_BUILD_ROOT/%{_bindir}/easy_install-%{py_ver} $RPM_BUILD_ROOT/%{_bindir}/easy_install
+ln -sf easy_install-%{py_ver} $RPM_BUILD_ROOT%{_bindir}/easy_install
 %endif
 
 %clean
