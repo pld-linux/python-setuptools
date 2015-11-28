@@ -4,13 +4,18 @@
 %bcond_with	tests	# "test" action (fails?)
 %bcond_without	python2 # CPython 2.x module
 %bcond_without	python3 # CPython 3.x module
+%bcond_without	python3_default	# Use Python 3.x for easy_install executable
+
+%if %{without python3}
+%undefine	python3_default
+%endif
 
 %define		module	setuptools
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
 Version:	18.6.1
-Release:	1
+Release:	2
 Epoch:		1
 License:	PSF or ZPL
 Group:		Development/Languages/Python
@@ -72,6 +77,23 @@ setuptools to zestaw rozszerzeń do pythonowych distutils umożliwiający
 łatwiejsze budowanie i rozprowadzanie pakietów Pythona 3.x,
 szczególnie tych mających zależności od innych pakietów.
 
+%package -n easy_install
+Summary:	Python software installer
+Summary(pl.UTF-8):	Instalator oprogramowania napisanego w Pythonie
+Group:		Libraries/Python
+%if %{with python3_default}
+Requires:	python3-%{module} = %{epoch}:%{version}-%{release}
+%else
+Requires:	python-%{module} = %{epoch}:%{version}-%{release}
+%endif
+Conflicts:	%{name} < 1:18.6.1-2
+
+%description -n easy_install
+Python software installer.
+
+%description -n easy_install
+Instalator oprogramowania napisanego w Pythonie.
+
 %package apidocs
 Summary:	%{module} API documentation
 Summary(pl.UTF-8):	Dokumentacja API %{module}
@@ -119,6 +141,12 @@ rm -rf $RPM_BUILD_ROOT
 %py_postclean
 %endif
 
+%if %{with python3_default}
+ln -f $RPM_BUILD_ROOT/%{_bindir}/easy_install-%{py3_ver} $RPM_BUILD_ROOT/%{_bindir}/easy_install
+%else
+ln -f $RPM_BUILD_ROOT/%{_bindir}/easy_install-%{py_ver} $RPM_BUILD_ROOT/%{_bindir}/easy_install
+%endif
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -126,8 +154,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README.txt
-%attr(755,root,root) %{_bindir}/easy_install
-%attr(755,root,root) %{_bindir}/easy_install-2.*
+%attr(755,root,root) %{_bindir}/easy_install-%{py_ver}
 %{py_sitescriptdir}/pkg_resources
 %{py_sitescriptdir}/setuptools
 %{py_sitescriptdir}/_markerlib
@@ -139,7 +166,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -n python3-%{module}
 %defattr(644,root,root,755)
 %doc README.txt
-%attr(755,root,root) %{_bindir}/easy_install-3.*
+%attr(755,root,root) %{_bindir}/easy_install-%{py3_ver}
 %{py3_sitescriptdir}/__pycache__/easy_install.*.py[co]
 %{py3_sitescriptdir}/pkg_resources
 %{py3_sitescriptdir}/setuptools
@@ -147,6 +174,10 @@ rm -rf $RPM_BUILD_ROOT
 %{py3_sitescriptdir}/easy_install.py
 %{py3_sitescriptdir}/%{module}-%{version}-py*.egg-info
 %endif
+
+%files -n easy_install
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/easy_install
 
 %if %{with apidocs}
 %files apidocs
