@@ -14,14 +14,14 @@
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
-Version:	18.6.1
-Release:	3
+Version:	19.4
+Release:	1
 Epoch:		1
 License:	PSF or ZPL
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.python.org/pypi/setuptools
 Source0:	https://pypi.python.org/packages/source/s/setuptools/setuptools-%{version}.tar.gz
-# Source0-md5:	d4797a533b3c7466fd36a791c2de94d2
+# Source0-md5:	c5a7d90c1e0acf8c4ec5c2bf31bc25b5
 URL:		https://bitbucket.org/pypa/setuptools
 %if %(locale -a | grep -q '^en_US.UTF-8$'; echo $?)
 BuildRequires:	glibc-localedb-all
@@ -107,9 +107,6 @@ Dokumentacja API %{module}.
 
 %prep
 %setup -q -n %{module}-%{version}
-
-# missing file, required by docs build (as of 18.3)
-touch CHANGES.txt
 
 %build
 %if %{with python2}
