@@ -1,9 +1,9 @@
 #
 # Conditional build:
-%bcond_without	apidocs	# sphinx based documentation
-%bcond_with	tests	# "test" action (fails?)
-%bcond_without	python2 # CPython 2.x module
-%bcond_without	python3 # CPython 3.x module
+%bcond_without	apidocs		# Sphinx based documentation
+%bcond_with	tests		# "test" action (fails, pytest-runner doesn't support build-base)
+%bcond_without	python2		# CPython 2.x module
+%bcond_without	python3		# CPython 3.x module
 %bcond_without	python3_default	# Use Python 3.x for easy_install executable
 
 %if %{without python3}
@@ -14,14 +14,14 @@
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
-Version:	19.4
+Version:	20.2.2
 Release:	1
 Epoch:		1
 License:	PSF or ZPL
 Group:		Development/Languages/Python
-#Source0Download: https://pypi.python.org/pypi/setuptools
+#Source0Download: https://pypi.python.org/simple/setuptools/
 Source0:	https://pypi.python.org/packages/source/s/setuptools/setuptools-%{version}.tar.gz
-# Source0-md5:	c5a7d90c1e0acf8c4ec5c2bf31bc25b5
+# Source0-md5:	bf37191cb4c1472fb61e6f933d2006b1
 URL:		https://bitbucket.org/pypa/setuptools
 %if %(locale -a | grep -q '^en_US.UTF-8$'; echo $?)
 BuildRequires:	glibc-localedb-all
@@ -29,13 +29,25 @@ BuildRequires:	glibc-localedb-all
 %if %{with python2}
 BuildRequires:	python-modules >= 1:2.6
 BuildConflicts:	python-distribute < 0.7
+%if %{with tests}
+BuildRequires:	python-mock
+BuildRequires:	python-pytest >= 2.8
+BuildRequires:	python-pytest-runner
+%endif
 %endif
 %if %{with python3}
 BuildRequires:	python3-modules >= 1:3.2
 BuildConflicts:	python3-distribute < 0.7
+%if %{with tests}
+%if "%{py3_ver}" < "3.3"
+BuildRequires:	python3-mock
+%endif
+BuildRequires:	python3-pytest >= 2.8
+BuildRequires:	python3-pytest-runner
+%endif
 %endif
 %if %{with apidocs}
-BuildRequires:	python3-rst.linker
+BuildRequires:	python3-rst.linker >= 1.4
 BuildRequires:	sphinx-pdg-3
 %endif
 BuildRequires:	rpm-pythonprov
@@ -120,7 +132,7 @@ LC_ALL=en_US.UTF-8 \
 %endif
 
 %if %{with apidocs}
-#%{__make} -C docs html
+#%{__make} -C docs html SPHINXBUILD=sphinx-build-3
 # rst.linker needs sphinx-build to be run from directory containing "CHANGES.txt"
 sphinx-build-3 -b html -d build/doctrees -D latex_paper_size=a4 docs build/html
 %endif
@@ -150,11 +162,10 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python2}
 %files
 %defattr(644,root,root,755)
-%doc README.txt
+%doc CHANGES.txt README.txt
 %attr(755,root,root) %{_bindir}/easy_install-%{py_ver}
 %{py_sitescriptdir}/pkg_resources
 %{py_sitescriptdir}/setuptools
-%{py_sitescriptdir}/_markerlib
 %{py_sitescriptdir}/easy_install.py[co]
 %{py_sitescriptdir}/%{module}-%{version}-py*.egg-info
 %endif
@@ -162,12 +173,11 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python3}
 %files -n python3-%{module}
 %defattr(644,root,root,755)
-%doc README.txt
+%doc CHANGES.txt README.txt
 %attr(755,root,root) %{_bindir}/easy_install-%{py3_ver}
 %{py3_sitescriptdir}/__pycache__/easy_install.*.py[co]
 %{py3_sitescriptdir}/pkg_resources
 %{py3_sitescriptdir}/setuptools
-%{py3_sitescriptdir}/_markerlib
 %{py3_sitescriptdir}/easy_install.py
 %{py3_sitescriptdir}/%{module}-%{version}-py*.egg-info
 %endif
