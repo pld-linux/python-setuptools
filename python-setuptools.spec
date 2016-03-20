@@ -14,14 +14,14 @@
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
-Version:	20.2.2
+Version:	20.3.1
 Release:	1
 Epoch:		1
 License:	PSF or ZPL
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.python.org/simple/setuptools/
 Source0:	https://pypi.python.org/packages/source/s/setuptools/setuptools-%{version}.tar.gz
-# Source0-md5:	bf37191cb4c1472fb61e6f933d2006b1
+# Source0-md5:	7e4ba5cdebc02710d3ab748c103fc673
 URL:		https://bitbucket.org/pypa/setuptools
 %if %(locale -a | grep -q '^en_US.UTF-8$'; echo $?)
 BuildRequires:	glibc-localedb-all
