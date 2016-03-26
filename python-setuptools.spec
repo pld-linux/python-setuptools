@@ -15,7 +15,7 @@ Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
 Version:	20.3.1
-Release:	1
+Release:	2
 Epoch:		1
 License:	PSF or ZPL
 Group:		Development/Languages/Python
@@ -147,7 +147,8 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python2}
 %py_install
 
-%py_postclean
+# note: setuptools/command/easy_install.py expects setuptools/site-patch.py to exist
+%py_postclean -x site-patch.py
 %endif
 
 %if %{with python3_default}
