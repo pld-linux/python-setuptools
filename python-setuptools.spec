@@ -103,7 +103,7 @@ Conflicts:	python-setuptools < 1:18.6.1-2
 %description -n easy_install
 Python software installer.
 
-%description -n easy_install
+%description -n easy_install -l pl.UTF-8
 Instalator oprogramowania napisanego w Pythonie.
 
 %package apidocs
