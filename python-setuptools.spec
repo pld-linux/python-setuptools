@@ -14,15 +14,16 @@
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
-Version:	20.3.1
-Release:	2
+Version:	21.0.0
+Release:	1
 Epoch:		1
 License:	PSF or ZPL
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.python.org/simple/setuptools/
-Source0:	https://pypi.python.org/packages/source/s/setuptools/setuptools-%{version}.tar.gz
-# Source0-md5:	7e4ba5cdebc02710d3ab748c103fc673
-URL:		https://bitbucket.org/pypa/setuptools
+Source0:	https://pypi.python.org/packages/ff/d4/209f4939c49e31f5524fa0027bf1c8ec3107abaf7c61fdaad704a648c281/setuptools-%{version}.tar.gz
+# Source0-md5:	81964fdb89534118707742e6d1a1ddb4
+Patch0:		%{name}-missing.patch
+URL:		https://github.com/pypa/setuptools
 %if %(locale -a | grep -q '^en_US.UTF-8$'; echo $?)
 BuildRequires:	glibc-localedb-all
 %endif
@@ -119,6 +120,7 @@ Dokumentacja API %{module}.
 
 %prep
 %setup -q -n %{module}-%{version}
+%patch0 -p1
 
 %build
 %if %{with python2}
@@ -163,7 +165,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python2}
 %files
 %defattr(644,root,root,755)
-%doc CHANGES.txt README.txt
+%doc CHANGES.rst README.rst
 %attr(755,root,root) %{_bindir}/easy_install-%{py_ver}
 %{py_sitescriptdir}/pkg_resources
 %{py_sitescriptdir}/setuptools
@@ -174,7 +176,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python3}
 %files -n python3-%{module}
 %defattr(644,root,root,755)
-%doc CHANGES.txt README.txt
+%doc CHANGES.rst README.rst
 %attr(755,root,root) %{_bindir}/easy_install-%{py3_ver}
 %{py3_sitescriptdir}/__pycache__/easy_install.*.py[co]
 %{py3_sitescriptdir}/pkg_resources
