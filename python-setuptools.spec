@@ -15,7 +15,7 @@ Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
 Version:	21.0.0
-Release:	1
+Release:	2
 Epoch:		1
 License:	PSF or ZPL
 Group:		Development/Languages/Python
