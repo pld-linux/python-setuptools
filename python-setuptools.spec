@@ -1,7 +1,7 @@
 #
 # Conditional build:
 %bcond_without	apidocs		# Sphinx based documentation
-%bcond_with	tests		# "test" action (fails, pytest-runner doesn't support build-base)
+%bcond_with	tests		# py.test tests (few failures)
 %bcond_without	python2		# CPython 2.x module
 %bcond_without	python3		# CPython 3.x module
 %bcond_without	python3_default	# Use Python 3.x for easy_install executable
@@ -14,45 +14,47 @@
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
-Version:	21.0.0
-Release:	3
+Version:	34.3.3
+Release:	1
 Epoch:		1
 License:	PSF or ZPL
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.python.org/simple/setuptools/
-Source0:	https://pypi.python.org/packages/ff/d4/209f4939c49e31f5524fa0027bf1c8ec3107abaf7c61fdaad704a648c281/setuptools-%{version}.tar.gz
-# Source0-md5:	81964fdb89534118707742e6d1a1ddb4
-Patch0:		%{name}-missing.patch
+Source0:	https://pypi.python.org/packages/d5/b7/e52b7dccd3f91eec858309dcd931c1387bf70b6d458c86a9bfcb50134fbd/setuptools-%{version}.zip
+# Source0-md5:	696941b10b15f0717be957a4d6cfc12e
 URL:		https://github.com/pypa/setuptools
-%if %(locale -a | grep -q '^en_US.UTF-8$'; echo $?)
+%if %(locale -a | grep -q '^C.UTF-8$'; echo $?)
 BuildRequires:	glibc-localedb-all
 %endif
 %if %{with python2}
 BuildRequires:	python-modules >= 1:2.6
 BuildConflicts:	python-distribute < 0.7
 %if %{with tests}
-BuildRequires:	python-mock
-BuildRequires:	python-pytest >= 2.8
-BuildRequires:	python-pytest-runner
+BuildRequires:	python-appdirs >= 1.4.0
+BuildRequires:	python-backports.unittest_mock >= 1.2
+BuildRequires:	python-packaging >= 16.8
+BuildRequires:	python-pytest >= 3.0.2
+BuildRequires:	python-pytest-flake8
+BuildRequires:	python-six >= 1.6.0
 %endif
 %endif
 %if %{with python3}
-BuildRequires:	python3-modules >= 1:3.2
+BuildRequires:	python3-modules >= 1:3.3
 BuildConflicts:	python3-distribute < 0.7
 %if %{with tests}
-%if "%{py3_ver}" < "3.3"
-BuildRequires:	python3-mock
-%endif
-BuildRequires:	python3-pytest >= 2.8
-BuildRequires:	python3-pytest-runner
+BuildRequires:	python3-appdirs >= 1.4.0
+BuildRequires:	python3-packaging >= 16.8
+BuildRequires:	python3-pytest >= 3.0.2
+BuildRequires:	python3-pytest-flake8
+BuildRequires:	python3-six >= 1.6.0
 %endif
 %endif
 %if %{with apidocs}
-BuildRequires:	python3-rst.linker >= 1.4
-BuildRequires:	sphinx-pdg-3
+BuildRequires:	python3-rst.linker >= 1.6.1
+BuildRequires:	sphinx-pdg-3 >= 1.4
 %endif
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.710
+BuildRequires:	rpmbuild(macros) >= 1.714
 Requires:	python-modules >= 1:2.6
 Obsoletes:	python-distribute < 0.7
 Obsoletes:	python-setuptools-devel
@@ -77,7 +79,7 @@ Pythona 2.x.
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Group:		Libraries/Python
-Requires:	python3-modules >= 1:3.2
+Requires:	python3-modules >= 1:3.3
 Obsoletes:	python3-distribute < 0.7
 
 %description -n python3-%{module}
@@ -120,23 +122,24 @@ Dokumentacja API %{module}.
 
 %prep
 %setup -q -n %{module}-%{version}
-%patch0 -p1
 
 %build
 %if %{with python2}
-LC_ALL=en_US.UTF-8 \
-%py_build %{?with_tests:test}
+LC_ALL=C.UTF-8 \
+%py_build
+
+%{?with_tests:%{__python} -m pytest pkg_resources/tests setuptools/tests tests}
 %endif
 
 %if %{with python3}
-LC_ALL=en_US.UTF-8 \
-%py3_build %{?with_tests:test}
+LC_ALL=C.UTF-8 \
+%py3_build
+
+%{?with_tests:%{__python3} -m pytest pkg_resources/tests setuptools/tests tests}
 %endif
 
 %if %{with apidocs}
-#%{__make} -C docs html SPHINXBUILD=sphinx-build-3
-# rst.linker needs sphinx-build to be run from directory containing "CHANGES.txt"
-sphinx-build-3 -b html -d build/doctrees -D latex_paper_size=a4 docs build/html
+%{__make} -C docs html SPHINXBUILD=sphinx-build-3
 %endif
 
 %install
@@ -192,5 +195,5 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with apidocs}
 %files apidocs
 %defattr(644,root,root,755)
-%doc build/html/*
+%doc docs/build/html/{_static,*.html,*.js}
 %endif
