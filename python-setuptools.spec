@@ -15,7 +15,7 @@ Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
 Version:	34.3.3
-Release:	1
+Release:	2
 Epoch:		1
 License:	PSF or ZPL
 Group:		Development/Languages/Python
@@ -28,11 +28,11 @@ BuildRequires:	glibc-localedb-all
 %endif
 %if %{with python2}
 BuildRequires:	python-modules >= 1:2.6
+BuildRequires:	python-packaging >= 16.8
 BuildConflicts:	python-distribute < 0.7
 %if %{with tests}
 BuildRequires:	python-appdirs >= 1.4.0
 BuildRequires:	python-backports.unittest_mock >= 1.2
-BuildRequires:	python-packaging >= 16.8
 BuildRequires:	python-pytest >= 3.0.2
 BuildRequires:	python-pytest-flake8
 BuildRequires:	python-six >= 1.6.0
@@ -40,10 +40,10 @@ BuildRequires:	python-six >= 1.6.0
 %endif
 %if %{with python3}
 BuildRequires:	python3-modules >= 1:3.3
+BuildRequires:	python3-packaging >= 16.8
 BuildConflicts:	python3-distribute < 0.7
 %if %{with tests}
 BuildRequires:	python3-appdirs >= 1.4.0
-BuildRequires:	python3-packaging >= 16.8
 BuildRequires:	python3-pytest >= 3.0.2
 BuildRequires:	python3-pytest-flake8
 BuildRequires:	python3-six >= 1.6.0
