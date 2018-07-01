@@ -55,6 +55,7 @@ BuildRequires:	sphinx-pdg-3 >= 1.4
 %endif
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
+BuildRequires:	unzip
 Requires:	python-modules >= 1:2.6
 Obsoletes:	python-distribute < 0.7
 Obsoletes:	python-setuptools-devel
