@@ -15,7 +15,7 @@ Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
 Version:	34.3.3
-Release:	2
+Release:	3
 Epoch:		1
 License:	PSF or ZPL
 Group:		Development/Languages/Python
