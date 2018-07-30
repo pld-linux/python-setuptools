@@ -31,22 +31,22 @@ BuildRequires:	python-appdirs >= 1.4.0
 BuildRequires:	python-modules >= 1:2.6
 BuildRequires:	python-packaging >= 16.8
 BuildConflicts:	python-distribute < 0.7
+BuildRequires:	python-six >= 1.6.0
 %if %{with tests}
 BuildRequires:	python-backports.unittest_mock >= 1.2
 BuildRequires:	python-pytest >= 3.0.2
 BuildRequires:	python-pytest-flake8
-BuildRequires:	python-six >= 1.6.0
 %endif
 %endif
 %if %{with python3}
 BuildRequires:	python3-appdirs >= 1.4.0
 BuildRequires:	python3-modules >= 1:3.3
 BuildRequires:	python3-packaging >= 16.8
+BuildRequires:	python3-six >= 1.6.0
 BuildConflicts:	python3-distribute < 0.7
 %if %{with tests}
 BuildRequires:	python3-pytest >= 3.0.2
 BuildRequires:	python3-pytest-flake8
-BuildRequires:	python3-six >= 1.6.0
 %endif
 %endif
 %if %{with apidocs}
