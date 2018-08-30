@@ -14,14 +14,14 @@
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
-Version:	34.3.3
-Release:	3
+Version:	40.2.0
+Release:	1
 Epoch:		1
 License:	PSF or ZPL
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.python.org/simple/setuptools/
-Source0:	https://pypi.python.org/packages/d5/b7/e52b7dccd3f91eec858309dcd931c1387bf70b6d458c86a9bfcb50134fbd/setuptools-%{version}.zip
-# Source0-md5:	696941b10b15f0717be957a4d6cfc12e
+Source0:	https://files.pythonhosted.org/packages/ef/1d/201c13e353956a1c840f5d0fbf0461bd45bbd678ea4843ebf25924e8984c/setuptools-%{version}.zip
+# Source0-md5:	592efabea3a65d8e97a025ed52f69b12
 URL:		https://github.com/pypa/setuptools
 %if %(locale -a | grep -q '^C.UTF-8$'; echo $?)
 BuildRequires:	glibc-localedb-all
@@ -50,6 +50,8 @@ BuildRequires:	python3-pytest-flake8
 %endif
 %endif
 %if %{with apidocs}
+BuildRequires:	python3-jaraco
+BuildRequires:	python3-jaraco.packaging
 BuildRequires:	python3-rst.linker >= 1.6.1
 BuildRequires:	sphinx-pdg-3 >= 1.4
 %endif
