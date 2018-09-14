@@ -11,6 +11,7 @@
 %endif
 
 %define		module	setuptools
+%define		pypi_name	setuptools
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
@@ -20,7 +21,7 @@ Epoch:		1
 License:	PSF or ZPL
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.python.org/simple/setuptools/
-Source0:	https://files.pythonhosted.org/packages/ef/1d/201c13e353956a1c840f5d0fbf0461bd45bbd678ea4843ebf25924e8984c/setuptools-%{version}.zip
+Source0:	https://files.pythonhosted.org/packages/source/s/%{pypi_name}/%{pypi_name}-%{version}.zip
 # Source0-md5:	592efabea3a65d8e97a025ed52f69b12
 URL:		https://github.com/pypa/setuptools
 %if %(locale -a | grep -q '^C.UTF-8$'; echo $?)
