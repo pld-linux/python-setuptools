@@ -15,14 +15,14 @@
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
-Version:	40.2.0
+Version:	40.4.3
 Release:	1
 Epoch:		1
 License:	PSF or ZPL
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.python.org/simple/setuptools/
 Source0:	https://files.pythonhosted.org/packages/source/s/%{pypi_name}/%{pypi_name}-%{version}.zip
-# Source0-md5:	592efabea3a65d8e97a025ed52f69b12
+# Source0-md5:	1ea9743d796d4ae0de0c952427ae964a
 URL:		https://github.com/pypa/setuptools
 %if %(locale -a | grep -q '^C.UTF-8$'; echo $?)
 BuildRequires:	glibc-localedb-all
