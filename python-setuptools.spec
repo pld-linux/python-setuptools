@@ -1,7 +1,9 @@
 #
 # Conditional build:
 %bcond_without	apidocs		# Sphinx based documentation
+%bcond_with	system_libs	# use system modules (appdirs, packaging, pyparsing, six) # TODO
 %bcond_with	tests		# py.test tests (few failures)
+%bcond_with	bootstrap	# convenience alias for without: apidocs,system_libs,tests
 %bcond_without	python2		# CPython 2.x module
 %bcond_without	python3		# CPython 3.x module
 %bcond_without	python3_default	# Use Python 3.x for easy_install executable
@@ -9,8 +11,13 @@
 %if %{without python3}
 %undefine	python3_default
 %endif
+%if %{with bootstrap}
+%undefine	with_apidocs
+%undefine	with_system_libs
+%undefine	with_tests
+%endif
 
-%define		module	setuptools
+%define		module		setuptools
 %define		pypi_name	setuptools
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
@@ -18,48 +25,81 @@ Name:		python-setuptools
 Version:	40.5.0
 Release:	1
 Epoch:		1
-License:	PSF or ZPL
+License:	MIT
 Group:		Development/Languages/Python
-#Source0Download: https://pypi.python.org/simple/setuptools/
-Source0:	https://files.pythonhosted.org/packages/source/s/%{pypi_name}/%{pypi_name}-%{version}.zip
+#Source0Download: https://pypi.org/simple/setuptools/
+Source0:	https://files.pythonhosted.org/packages/source/s/setuptools/%{pypi_name}-%{version}.zip
 # Source0-md5:	12f8546ead968a0c237732d53fe7fcb1
 URL:		https://github.com/pypa/setuptools
-%if %(locale -a | grep -q '^C.UTF-8$'; echo $?)
+%if %(locale -a | grep -q '^C\.utf8$'; echo $?)
 BuildRequires:	glibc-localedb-all
 %endif
 %if %{with python2}
-BuildRequires:	python-appdirs >= 1.4.0
-BuildRequires:	python-modules >= 1:2.6
+BuildRequires:	python-modules >= 1:2.7
+%if %{with system_libs}
+# versions from pkg_resources/_vendor/vendored.txt
+BuildRequires:	python-appdirs >= 1.4.3
 BuildRequires:	python-packaging >= 16.8
+BuildRequires:	python-pyparsing >= 2.2.1
+BuildRequires:	python-six >= 1.10.0
+%endif
 BuildConflicts:	python-distribute < 0.7
-BuildRequires:	python-six >= 1.6.0
 %if %{with tests}
-BuildRequires:	python-backports.unittest_mock >= 1.2
+BuildRequires:	python-coverage >= 4.5.1
+BuildRequires:	python-mock
 BuildRequires:	python-pytest >= 3.0.2
+BuildRequires:	python-pytest-cov >= 2.5.1
+BuildRequires:	python-pytest-fixture-config
 BuildRequires:	python-pytest-flake8
+BuildRequires:	python-pytest-virtualenv >= 1.2.7
+BuildRequires:	python-virtualenv >= 13.0.0
+BuildRequires:	python-wheel
 %endif
 %endif
 %if %{with python3}
-BuildRequires:	python3-appdirs >= 1.4.0
-BuildRequires:	python3-modules >= 1:3.3
+BuildRequires:	python3-modules >= 1:3.4
+%if %{with system_libs}
+# versions from pkg_resources/_vendor/vendored.txt
+BuildRequires:	python3-appdirs >= 1.4.3
 BuildRequires:	python3-packaging >= 16.8
-BuildRequires:	python3-six >= 1.6.0
+BuildRequires:	python3-pyparsing >= 2.2.1
+BuildRequires:	python3-six >= 1.10.0
+%endif
 BuildConflicts:	python3-distribute < 0.7
 %if %{with tests}
+BuildRequires:	python3-coverage >= 4.5.1
+# FIXME: patch to use unittest.mock
+#BuildRequires:	python3-mock
+%if "%{py3_ver}" >= "3.6"
+BuildRequires:	python3-paver
+%endif
 BuildRequires:	python3-pytest >= 3.0.2
+BuildRequires:	python3-pytest-cov >= 2.5.1
+BuildRequires:	python3-pytest-fixture-config
 BuildRequires:	python3-pytest-flake8
+BuildRequires:	python3-pytest-virtualenv >= 1.2.7
+BuildRequires:	python3-virtualenv >= 13.0.0
+BuildRequires:	python3-wheel
 %endif
 %endif
 %if %{with apidocs}
 BuildRequires:	python3-jaraco
-BuildRequires:	python3-jaraco.packaging
-BuildRequires:	python3-rst.linker >= 1.6.1
+BuildRequires:	python3-jaraco.packaging >= 3.2
+BuildRequires:	python3-rst.linker >= 1.9
+BuildRequires:	python3-setuptools >= 34
 BuildRequires:	sphinx-pdg-3 >= 1.4
 %endif
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
 BuildRequires:	unzip
-Requires:	python-modules >= 1:2.6
+Requires:	python-modules >= 1:2.7
+%if %{with system_libs}
+# versions from pkg_resources/_vendor/vendored.txt
+Requires:	python-appdirs >= 1.4.0
+Requires:	python-packaging >= 16.8
+Requires:	python-pyparsing >= 2.1.10
+Requires:	python-six >= 1.10.0
+%endif
 Obsoletes:	python-distribute < 0.7
 Obsoletes:	python-setuptools-devel
 BuildArch:	noarch
@@ -83,7 +123,14 @@ Pythona 2.x.
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Group:		Libraries/Python
-Requires:	python3-modules >= 1:3.3
+Requires:	python3-modules >= 1:3.4
+%if %{with system_libs}
+# versions from pkg_resources/_vendor/vendored.txt
+Requires:	python3-appdirs >= 1.4.0
+Requires:	python3-packaging >= 16.8
+Requires:	python3-pyparsing >= 2.1.10
+Requires:	python3-six >= 1.10.0
+%endif
 Obsoletes:	python3-distribute < 0.7
 
 %description -n python3-%{module}
@@ -126,6 +173,10 @@ Dokumentacja API %{module}.
 
 %prep
 %setup -q -n %{module}-%{version}
+
+%if %{with system_libs}
+exit 1 # TODO: unvendor modules from pkg_resources/_vendor
+%endif
 
 %build
 %if %{with python2}
@@ -172,7 +223,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python2}
 %files
 %defattr(644,root,root,755)
-%doc CHANGES.rst README.rst
+%doc CHANGES.rst LICENSE README.rst
 %attr(755,root,root) %{_bindir}/easy_install-%{py_ver}
 %{py_sitescriptdir}/pkg_resources
 %{py_sitescriptdir}/setuptools
@@ -183,7 +234,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python3}
 %files -n python3-%{module}
 %defattr(644,root,root,755)
-%doc CHANGES.rst README.rst
+%doc CHANGES.rst LICENSE README.rst
 %attr(755,root,root) %{_bindir}/easy_install-%{py3_ver}
 %{py3_sitescriptdir}/__pycache__/easy_install.*.py[co]
 %{py3_sitescriptdir}/pkg_resources
