@@ -22,14 +22,14 @@
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
-Version:	40.5.0
+Version:	41.4.0
 Release:	1
 Epoch:		1
 License:	MIT
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.org/simple/setuptools/
 Source0:	https://files.pythonhosted.org/packages/source/s/setuptools/%{pypi_name}-%{version}.zip
-# Source0-md5:	12f8546ead968a0c237732d53fe7fcb1
+# Source0-md5:	89a592d733b31e180a4b6ad760c0685a
 URL:		https://github.com/pypa/setuptools
 %if %(locale -a | grep -q '^C\.utf8$'; echo $?)
 BuildRequires:	glibc-localedb-all
@@ -46,8 +46,10 @@ BuildRequires:	python-six >= 1.10.0
 BuildConflicts:	python-distribute < 0.7
 %if %{with tests}
 BuildRequires:	python-coverage >= 4.5.1
+BuildRequires:	python-futures
 BuildRequires:	python-mock
-BuildRequires:	python-pytest >= 3.0.2
+BuildRequires:	python-pip >= 18.1
+BuildRequires:	python-pytest >= 3.7
 BuildRequires:	python-pytest-cov >= 2.5.1
 BuildRequires:	python-pytest-fixture-config
 BuildRequires:	python-pytest-flake8
@@ -73,7 +75,8 @@ BuildRequires:	python3-coverage >= 4.5.1
 %if "%{py3_ver}" >= "3.6"
 BuildRequires:	python3-paver
 %endif
-BuildRequires:	python3-pytest >= 3.0.2
+BuildRequires:	python3-pip >= 18.1
+BuildRequires:	python3-pytest >= 3.7
 BuildRequires:	python3-pytest-cov >= 2.5.1
 BuildRequires:	python3-pytest-fixture-config
 BuildRequires:	python3-pytest-flake8
@@ -84,7 +87,7 @@ BuildRequires:	python3-wheel
 %endif
 %if %{with apidocs}
 BuildRequires:	python3-jaraco
-BuildRequires:	python3-jaraco.packaging >= 3.2
+BuildRequires:	python3-jaraco.packaging >= 6.1
 BuildRequires:	python3-rst.linker >= 1.9
 BuildRequires:	python3-setuptools >= 34
 BuildRequires:	sphinx-pdg-3 >= 1.4
