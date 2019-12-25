@@ -22,14 +22,14 @@
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
-Version:	41.6.0
+Version:	42.0.2
 Release:	1
 Epoch:		1
 License:	MIT
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.org/simple/setuptools/
 Source0:	https://files.pythonhosted.org/packages/source/s/setuptools/%{pypi_name}-%{version}.zip
-# Source0-md5:	5585a55bfc28474ef13cc0b1819c5a46
+# Source0-md5:	5ac69b66a6f7d4785517017f37df28e9
 URL:		https://github.com/pypa/setuptools
 %if %(locale -a | grep -q '^C\.utf8$'; echo $?)
 BuildRequires:	glibc-localedb-all
@@ -39,16 +39,17 @@ BuildRequires:	python-modules >= 1:2.7
 %if %{with system_libs}
 # versions from pkg_resources/_vendor/vendored.txt
 BuildRequires:	python-appdirs >= 1.4.3
-BuildRequires:	python-packaging >= 16.8
+BuildRequires:	python-packaging >= 19.2
 BuildRequires:	python-pyparsing >= 2.2.1
 BuildRequires:	python-six >= 1.10.0
 %endif
 BuildConflicts:	python-distribute < 0.7
 %if %{with tests}
+# https://raw.githubusercontent.com/pypa/setuptools/v%{version}/tests/requirements.txt
 BuildRequires:	python-coverage >= 4.5.1
 BuildRequires:	python-futures
 BuildRequires:	python-mock
-BuildRequires:	python-pip >= 18.1
+BuildRequires:	python-pip >= 19.1
 BuildRequires:	python-pytest >= 3.7
 BuildRequires:	python-pytest-cov >= 2.5.1
 BuildRequires:	python-pytest-fixture-config
@@ -63,7 +64,7 @@ BuildRequires:	python3-modules >= 1:3.4
 %if %{with system_libs}
 # versions from pkg_resources/_vendor/vendored.txt
 BuildRequires:	python3-appdirs >= 1.4.3
-BuildRequires:	python3-packaging >= 16.8
+BuildRequires:	python3-packaging >= 19.2
 BuildRequires:	python3-pyparsing >= 2.2.1
 BuildRequires:	python3-six >= 1.10.0
 %endif
@@ -75,7 +76,7 @@ BuildRequires:	python3-coverage >= 4.5.1
 %if "%{py3_ver}" >= "3.6"
 BuildRequires:	python3-paver
 %endif
-BuildRequires:	python3-pip >= 18.1
+BuildRequires:	python3-pip >= 19.1
 BuildRequires:	python3-pytest >= 3.7
 BuildRequires:	python3-pytest-cov >= 2.5.1
 BuildRequires:	python3-pytest-fixture-config
@@ -147,8 +148,8 @@ setuptools to zestaw rozszerzeń do pythonowych distutils umożliwiający
 szczególnie tych mających zależności od innych pakietów.
 
 %package -n easy_install
-Summary:	Python software installer
-Summary(pl.UTF-8):	Instalator oprogramowania napisanego w Pythonie
+Summary:	Python software installer (deprecated)
+Summary(pl.UTF-8):	Instalator oprogramowania napisanego w Pythonie (przestarzały)
 Group:		Libraries/Python
 %if %{with python3_default}
 Requires:	python3-%{module} = %{epoch}:%{version}-%{release}
@@ -158,10 +159,11 @@ Requires:	python-%{module} = %{epoch}:%{version}-%{release}
 Conflicts:	python-setuptools < 1:18.6.1-2
 
 %description -n easy_install
-Python software installer.
+Python software installer. It's deprecated in favour of pip.
 
 %description -n easy_install -l pl.UTF-8
-Instalator oprogramowania napisanego w Pythonie.
+Instalator oprogramowania napisanego w Pythonie. Jest przestarzały,
+aktualnym zamiennikiem jest pip.
 
 %package apidocs
 Summary:	%{module} API documentation
