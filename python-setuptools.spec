@@ -23,7 +23,7 @@ Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
 Version:	42.0.2
-Release:	4
+Release:	5
 Epoch:		1
 License:	MIT
 Group:		Development/Languages/Python
