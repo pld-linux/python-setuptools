@@ -5,8 +5,8 @@
 %bcond_with	tests		# py.test tests (few failures)
 %bcond_with	bootstrap	# convenience alias for without: apidocs,system_libs,tests
 %bcond_without	python2		# CPython 2.x module
-%bcond_without	python3		# CPython 3.x module
-%bcond_without	python3_default	# Use Python 3.x for easy_install executable
+%bcond_with	python3		# CPython 3.x module
+%bcond_with	python3_default	# Use Python 3.x for easy_install executable
 
 %if %{without python3}
 %undefine	python3_default
