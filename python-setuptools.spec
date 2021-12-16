@@ -90,7 +90,7 @@ BuildRequires:	python3-wheel
 BuildRequires:	python3-jaraco
 BuildRequires:	python3-jaraco.packaging >= 6.1
 BuildRequires:	python3-rst.linker >= 1.9
-BuildRequires:	python3-setuptools >= 34
+BuildRequires:	python3-setuptools >= 1:34
 BuildRequires:	sphinx-pdg-3 >= 1.4
 %endif
 BuildRequires:	rpm-pythonprov
