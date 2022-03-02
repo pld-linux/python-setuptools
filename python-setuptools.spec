@@ -105,7 +105,7 @@ Requires:	python-pyparsing >= 2.1.10
 Requires:	python-six >= 1.10.0
 %endif
 Obsoletes:	python-distribute < 0.7
-Obsoletes:	python-setuptools-devel
+Obsoletes:	python-setuptools-devel < 1:6.0
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
