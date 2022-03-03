@@ -87,11 +87,11 @@ BuildRequires:	python3-wheel
 %endif
 %endif
 %if %{with apidocs}
-BuildRequires:	python3-jaraco
-BuildRequires:	python3-jaraco.packaging >= 6.1
-BuildRequires:	python3-rst.linker >= 1.9
-BuildRequires:	python3-setuptools >= 1:34
-BuildRequires:	sphinx-pdg-3 >= 1.4
+BuildRequires:	python-jaraco
+BuildRequires:	python-jaraco.packaging >= 6.1
+BuildRequires:	python-rst.linker >= 1.9
+BuildRequires:	python-setuptools >= 1:34
+BuildRequires:	sphinx-pdg-2 >= 1.4
 %endif
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
@@ -199,7 +199,8 @@ LC_ALL=C.UTF-8 \
 %endif
 
 %if %{with apidocs}
-%{__make} -C docs html SPHINXBUILD=sphinx-build-3
+%{__make} -C docs html \
+	SPHINXBUILD=sphinx-build-2
 %endif
 
 %install
