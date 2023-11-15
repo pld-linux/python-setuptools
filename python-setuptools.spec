@@ -5,7 +5,7 @@
 %bcond_with	tests		# py.test tests (few failures)
 %bcond_with	bootstrap	# convenience alias for without: apidocs,system_libs,tests
 %bcond_without	python2		# CPython 2.x module
-%bcond_with	python3		# CPython 3.x module
+%bcond_with	python3		# CPython 3.x module (built from python3-setuptools.spec)
 %bcond_with	python3_default	# Use Python 3.x for easy_install executable
 
 %if %{without python3}
@@ -22,14 +22,15 @@
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Name:		python-setuptools
-Version:	42.0.2
-Release:	6
+# keep 44.x here for python2 support
+Version:	44.1.1
+Release:	1
 Epoch:		1
 License:	MIT
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.org/simple/setuptools/
 Source0:	https://files.pythonhosted.org/packages/source/s/setuptools/%{pypi_name}-%{version}.zip
-# Source0-md5:	5ac69b66a6f7d4785517017f37df28e9
+# Source0-md5:	2c41f19cfd1f16a7d7bb23689921ac1b
 URL:		https://github.com/pypa/setuptools
 %if %(locale -a | grep -q '^C\.utf8$'; echo $?)
 BuildRequires:	glibc-localedb-all
@@ -60,7 +61,7 @@ BuildRequires:	python-wheel
 %endif
 %endif
 %if %{with python3}
-BuildRequires:	python3-modules >= 1:3.4
+BuildRequires:	python3-modules >= 1:3.5
 %if %{with system_libs}
 # versions from pkg_resources/_vendor/vendored.txt
 BuildRequires:	python3-appdirs >= 1.4.3
@@ -127,7 +128,7 @@ Pythona 2.x.
 Summary:	A collection of enhancements to the Python distutils
 Summary(pl.UTF-8):	Zestaw rozszerzeń dla pythonowych distutils
 Group:		Libraries/Python
-Requires:	python3-modules >= 1:3.4
+Requires:	python3-modules >= 1:3.5
 %if %{with system_libs}
 # versions from pkg_resources/_vendor/vendored.txt
 Requires:	python3-appdirs >= 1.4.0
